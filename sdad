@@ -1,0 +1,23 @@
+<?php require_once 'functions.php'; require_once 'nav_top.php';connect(); ?>
+<div class="row up-top" style="margin-top:270px;">
+<?php $fotos = getFotos(); ?>
+	<div id="content1" class="col-sm-12" style='margin-left:100px;'>
+		<?php foreach ($fotos as $p ):?>
+				<div class="col-sm-3 boxed" style='margin-left:2px;'>
+			 		<h3 class="widget-title"><a href="view.php?id=<?php echo $p['foto_id'];?>"><?php echo $p['judul_foto'];?></a></h3>
+					<div class="inner"style="margin-bottom:20px;" >
+						<img src="<?php echo $p['foto'];?>" width="100%" height="100%">
+		    		</div>
+				</div>
+		 <?php endforeach ?>
+	</div>
+</div>	
+</div>
+<?php include 'footer.php';?>
+<!--/ content -->
+</div>
+</div>
+<!--/ container -->
+
+</body>
+</html>
