@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!--meta-->
+<title>Rumus Penghitung Kalori</title>
+<style type="text/css">
+table.kalori {
+	width: 358px;
+	border: 1px solid #999966;
+}
+table.kalori input, table.kalori select, table.kalori caption { font-weight: bold; }
+table.kalori th, table.kalori td {
+	padding:1px 3px;
+	background-color: #FFFF91;
+	border: 1px solid #999966;
+	font-weight: bold;
+}
+table.kalori th { text-align: right; }
+table.kalori .style1 { color: #000099 }
+table.kalori .style4 { color: #006600 }
+table.kalori .style5 { color: #CC00FF; }
+table.kalori .style7 { color: #914800 }
+table.kalori .style9 { color: #09918A; }
+table.kalori .style10 { color: #C90110; }
+</style>
+<script language="JavaScript">
+function isNumberKey(evt)
+      {
+         var charCode = (evt.which) ? evt.which : event.keyCode
+         if (charCode > 31 && (charCode < 48 || charCode > 57)){
+            return false;
+        }
+         return true;
+      }
+
+onload = function(){
+	function hitungmbr(formObj) {
+		if(formObj) {
+			var bb = parseFloat(formObj.bb.value, 10);
+			var tb = parseFloat(formObj.tb.value, 10);
+			var umur = parseFloat(formObj.umur.value, 10);
+			var kelamin = parseInt(formObj.kelamin.options[formObj.kelamin.selectedIndex].value, 10); // menunjuk value pilihan jenis kelamin
+			var constants = [];//empty Array
+			constants[0] = [66, 13.7, 5, 6.8];//array of values //digunakan dengan pilihan langsung pada bagian pilihan ke-1 :laki-laki
+			constants[1] = [655, 9.6, 1.8, 4.7];//array of values //ini bila kita tidak memilih di pilihan satu :perempuan maka rumus yang dipakai menjadi
+			formObj.bmr.value = constants[kelamin][0] + (bb * constants[kelamin][1])+(tb * constants[kelamin][2])- (umur * constants[kelamin][3]);
+		}
+	}
+	function hitungkalori(formObj) {
+		if(formObj) {
+			var bmr = parseFloat(formObj.bmr.value, 10);
+			var kegiatan = parseInt(formObj.kegiatan.options[formObj.kegiatan.selectedIndex].value, 10); // menunjuk pilihan jenis kegiatan
+			var constants = [1.2, 1.375, 1.55, 1.725, 1.9];//array of values
+			formObj.kalori.value =  bmr * constants[kegiatan];
+		}
+	}
+	var kaloriForm         = document.getElementById('penghitungkaloriharian');
+	var hitungmbrButton    = document.getElementById('hitungmbr');
+	var hitungkaloriButton = document.getElementById('hitungkalori');
+	hitungmbrButton.onclick    = function(){ hitungmbr(kaloriForm); }
+	hitungkaloriButton.onclick = function(){ hitungkalori(kaloriForm); };
+};
+</script>
+</head>
+<body>
+<form id="penghitungkaloriharian" name="penghitungkaloriharian" action="" method="post">
+<table class="kalori" border="0" cellspacing="2" summary="Adalah tabel yang digunakan untuk menghitung kebutuhan kalori harian anda. Tabel ini mempresentasikan kebutuhan kalori anda berdasarkan jenis kelamin dan jenis kegiatan harian anda. Di adaptasi dari Penghitungan Harris-Benedict.">
+<caption align="top" class="style4">Tabel Penghitung Kebutuhan Kalori</caption>
+<tr>
+<th class="style1" scope="col">Saya adalah seorang</th>
+<td scope="col"><select id="kelamin" name="kelamin" size="1" class="style4">
+    <option value="0" selected>Laki - laki</option>
+    <option value="1" >Perempuan</option>
+</select></td>
+</tr><tr>
+<th class="style1">Berat Badan</th>
+<td class="style5"><input id="bb" name="bb"  onKeyPress="return isNumberKey(event)"type="text" class="style4" size="4">&nbsp;kg</td>
+</tr><tr>
+<th class="style1">Tinggi Badan</th>
+<td class="style5"><input id="tb" name="tb" onKeyPress="return isNumberKey(event)"  type="text" class="style4" size="4">&nbsp;cm</td>
+</tr><tr>
+<th class="style1">Umur</th>
+<td class="style5"><input id="umur" name="umur" onKeyPress="return isNumberKey(event)"  type="text" class="style4" size="4">&nbsp;tahun</td>
+</tr><tr>
+<td colspan="2" align="center"><input id="hitungmbr" name="Button" type="button" class="style1" value="Hitung BMR"></td>
+</tr><tr>
+<th class="style1">BMR anda</th>
+<td><input id="bmr" name="bmr" type="text" class="style9" size="5" readonly></td>
+</tr><tr>
+<th class="style1">Jenis kegiatan yang akan anda lakukan sehari- hari</th>
+<td><select id="kegiatan" name="kegiatan" size="1" class="style4">
+    <option value="0" selected>Tanpa Kegiatan</option>
+    <option value="1">Kegiatan Ringan</option>
+    <option value="2">Kegiatan Sedang</option>
+    <option value="3">Kegiatan Berat</option>
+    <option value="4">Kegiatan Sangat Berat</option>
+    </select></td>
+</tr><tr>
+<td colspan="2" align="center"><input id="hitungkalori" name="Button" type="button" class="style1" value="Hitung Kalori Harian"></td>
+</tr><tr>
+<th class="style1">Kalori yang anda butuhkan dalam sehari</th>
+<td class="style10"><input id="kalori" name="kalori" type="text" class="style10" size="5" readonly>&nbsp;kalori</td>
+</tr>
+</table>
+</form>
+</body>
+</html>
